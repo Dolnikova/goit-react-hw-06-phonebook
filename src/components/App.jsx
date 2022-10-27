@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import React, { Component } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ContactForm from './Phonebook/ContactForm/ContactForm';
+import { ContactForm } from './Phonebook/ContactForm/ContactForm';
 import { ContactList } from './Phonebook/ContactList/ContactList';
 import { Container } from './Phonebook/cotainer';
 import Filter from './Phonebook/Filter/Filer';
