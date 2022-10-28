@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormContainer, InputForm, Button } from './ContactFormStyled';
 import { useState } from 'react';
-// import { PropTypes } from 'prop-types';
 
 export const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
