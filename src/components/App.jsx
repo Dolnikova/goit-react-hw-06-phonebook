@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import React, { Component } from 'react';
+import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContactForm } from './Phonebook/ContactForm/ContactForm';
@@ -7,13 +7,13 @@ import { ContactList } from './Phonebook/ContactList/ContactList';
 import { Container } from './Phonebook/cotainer';
 import Filter from './Phonebook/Filter/Filer';
 import initialContacts from './phone-book.json';
+import { useState, useEffect } from 'react';
 
-class App extends Component {
-  state = {
-    contacts: initialContacts,
-    filter: '',
-  };
-  notify = name => {
+export const App = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState('');
+
+  const notify = name => {
     toast.error(`Sorry, ${name} already exists`, {
       position: 'top-right',
       autoClose: 2000,
@@ -26,8 +26,7 @@ class App extends Component {
     });
   };
 
-  addNewContact = data => {
-    const { contacts } = this.state;
+  const addNewContact = data => {
     const { name, number } = data;
     const contact = {
       id: nanoid(),
@@ -40,75 +39,64 @@ class App extends Component {
         ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
       )
     ) {
-      this.notify(name);
+      notify(name);
       return;
     }
 
-    this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
-    }));
+    setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
-  deleteContact = contactId => {
-    const state = this.state;
-    const visibleContacts = state.contacts.filter(
+  const deleteContact = contactId => {
+    const visibleContacts = contacts.filter(
       contact => contact.id !== contactId
     );
-    this.setState({ contacts: visibleContacts });
+    setContacts(visibleContacts);
   };
 
-  onFilter = filter => {
-    this.setState({ filter });
+  const onFilter = filter => {
+    setFilter(filter);
   };
+  useEffect(() => {
+    const parcedPhonebook = JSON.parse(localStorage.getItem('phone-book'));
+    parcedPhonebook
+      ? setContacts(parcedPhonebook)
+      : setContacts(initialContacts);
+  }, []);
 
-  componentDidMount() {
-    if (localStorage.getItem('phone-book'))
-      this.setState({
-        contacts: JSON.parse(localStorage.getItem('phone-book')),
-      });
-  }
+  useEffect(() => {
+    if (!contacts.length) return;
+    localStorage.setItem('phone-book', JSON.stringify(contacts));
+  }, [contacts]);
 
-  componentDidUpdate(prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('phone-book', JSON.stringify(this.state.contacts));
-    }
-  }
-
-  render() {
-    const { contacts, filter } = this.state;
-    const visibleContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-    return (
-      <>
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-        <Container>
-          <h2>Phonebook</h2>
-          <ContactForm onSubmit={this.addNewContact} />
-          <h2>Contacts</h2>
-          {contacts.length > 0 && (
-            <Filter filter={filter} onFilter={this.onFilter} />
-          )}
-          {contacts.length > 0 && (
-            <ContactList
-              contacts={visibleContacts}
-              deleteContact={this.deleteContact}
-            />
-          )}
-        </Container>
-      </>
-    );
-  }
-}
-export default App;
+  const visibleContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+  return (
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <Container>
+        <h2>Phonebook</h2>
+        <ContactForm onSubmit={addNewContact} />
+        <h2>Contacts</h2>
+        {contacts.length > 0 && <Filter filter={filter} onFilter={onFilter} />}
+        {contacts.length > 0 && (
+          <ContactList
+            contacts={visibleContacts}
+            deleteContact={deleteContact}
+          />
+        )}
+      </Container>
+    </>
+  );
+};

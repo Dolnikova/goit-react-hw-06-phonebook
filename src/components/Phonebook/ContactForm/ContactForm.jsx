@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { FormContainer, InputForm, Button } from './ContactFormStyled';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 
-export const ContactForm = () => {
-  this.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-  };
+export const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const handleChange = e => {
@@ -16,9 +13,8 @@ export const ContactForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(name);
 
-    this.onSubmit({ name, number });
+    onSubmit({ name, number });
     setName('');
     setNumber('');
   };
