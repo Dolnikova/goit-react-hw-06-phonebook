@@ -33,7 +33,6 @@ export const App = () => {
       name,
       number,
     };
-
     if (
       contacts.some(
         ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
@@ -42,7 +41,6 @@ export const App = () => {
       notify(name);
       return;
     }
-
     setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
