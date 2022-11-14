@@ -1,25 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFiler, onFilter } from 'redux/filterSlice';
 
-export default class Filter extends Component {
-  handleFilter = e => {
-    this.props.onFilter(e.currentTarget.value);
+const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(getFiler);
+  const handleFilter = e => {
+    dispatch(onFilter(e.target.value));
   };
-  render() {
-    const { filter } = this.props;
-    return (
-      <div className="FilterWrapper">
-        Find contact by name
-        <form action="">
-          <label htmlFor="">
-            <input
-              type="text"
-              name="filter"
-              value={filter}
-              onChange={this.handleFilter}
-            />
-          </label>
-        </form>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="FilterWrapper">
+      Find contact by name
+      <form action="">
+        <label htmlFor="">
+          <input
+            type="text"
+            name="filter"
+            value={filter}
+            onChange={handleFilter}
+          />
+        </label>
+        {console.log(filter)}
+      </form>
+    </div>
+  );
+};
+export default Filter;

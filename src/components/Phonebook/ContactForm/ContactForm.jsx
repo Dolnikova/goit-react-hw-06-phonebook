@@ -1,8 +1,14 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormContainer, InputForm, Button } from './ContactFormStyled';
 import { useState } from 'react';
+import { addNewContact, getContacts } from 'redux/contactsSlice';
+import { toast } from 'react-toastify';
+import { nanoid } from '@reduxjs/toolkit';
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const handleChange = e => {
@@ -10,10 +16,29 @@ export const ContactForm = ({ onSubmit }) => {
     name === 'name' ? setName(value) : setNumber(value);
   };
 
+  const notify = name => {
+    toast.error(`Sorry, ${name} already exists`, {
+      position: 'top-right',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-
-    onSubmit({ name, number });
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+    contacts.some(contact => contact.name === name)
+      ? notify(name)
+      : dispatch(addNewContact(contact));
     setName('');
     setNumber('');
   };
