@@ -5,13 +5,11 @@ import { ContactForm } from './Phonebook/ContactForm/ContactForm';
 import { ContactList } from './Phonebook/ContactList/ContactList';
 import { Container } from './Phonebook/cotainer';
 import Filter from './Phonebook/Filter/Filer';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/contactsSlice';
 
 export const App = () => {
   const contacts = useSelector(getContacts);
-  const [filter, setFilter] = useState('');
 
   // const addNewContact = data => {
   //   const { name, number } = data;
@@ -67,12 +65,14 @@ export const App = () => {
         <h2>Phonebook</h2>
         <ContactForm />
         <h2>Contacts</h2>
-        {contacts.length > 0 && <Filter />}
-        {contacts.length > 0 && (
+        {contacts.length > 1 && <Filter />}
+        {contacts.length > 0 ? (
           <ContactList
           // contacts={visibleContacts}
           // deleteContact={deleteContact}
           />
+        ) : (
+          'You have no contacts saved'
         )}
       </Container>
     </>

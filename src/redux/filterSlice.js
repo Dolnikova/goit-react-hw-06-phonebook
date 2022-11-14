@@ -5,7 +5,7 @@ const filterSlice = createSlice({
   initialState: '',
   reducers: {
     onFilter(state, { payload }) {
-      state = payload;
+      return payload;
     },
   },
 });

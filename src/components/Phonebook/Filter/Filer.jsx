@@ -20,7 +20,6 @@ const Filter = () => {
             onChange={handleFilter}
           />
         </label>
-        {console.log(filter)}
       </form>
     </div>
   );
