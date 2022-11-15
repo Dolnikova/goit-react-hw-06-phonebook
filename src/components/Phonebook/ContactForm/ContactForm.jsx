@@ -7,15 +7,14 @@ import { toast } from 'react-toastify';
 import { nanoid } from '@reduxjs/toolkit';
 
 export const ContactForm = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const handleChange = e => {
     const { name, value } = e.currentTarget;
     name === 'name' ? setName(value) : setNumber(value);
   };
-
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
   const notify = name => {
     toast.error(`Sorry, ${name} already exists`, {
       position: 'top-right',

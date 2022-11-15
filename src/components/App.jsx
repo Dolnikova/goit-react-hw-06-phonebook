@@ -10,43 +10,6 @@ import { getContacts } from 'redux/contactsSlice';
 
 export const App = () => {
   const contacts = useSelector(getContacts);
-
-  // const addNewContact = data => {
-  //   const { name, number } = data;
-  //   const contact = {
-  //     id: nanoid(),
-  //     name,
-  //     number,
-  //   };
-  //   if (
-  //     contacts.some(
-  //       ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
-  //     )
-  //   ) {
-  //     notify(name);
-  //     return;
-  //   }
-  //   setContacts(prevContacts => [contact, ...prevContacts]);
-  // };
-
-  // const onFilter = filter => {
-  //   setFilter(filter);
-  // };
-  // useEffect(() => {
-  //   const parcedPhonebook = JSON.parse(localStorage.getItem('phone-book'));
-  //   parcedPhonebook
-  //     ? setContacts(parcedPhonebook)
-  //     : setContacts(initialContacts);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!contacts.length) return;
-  //   localStorage.setItem('phone-book', JSON.stringify(contacts));
-  // }, [contacts]);
-
-  // const visibleContacts = contacts.filter(contact =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase())
-  // );
   return (
     <>
       <ToastContainer
@@ -66,14 +29,7 @@ export const App = () => {
         <ContactForm />
         <h2>Contacts</h2>
         {contacts.length > 1 && <Filter />}
-        {contacts.length > 0 ? (
-          <ContactList
-          // contacts={visibleContacts}
-          // deleteContact={deleteContact}
-          />
-        ) : (
-          'You have no contacts saved'
-        )}
+        {contacts.length > 0 ? <ContactList /> : 'You have no contacts saved'}
       </Container>
     </>
   );

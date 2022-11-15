@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFiler, onFilter } from 'redux/filterSlice';
 
 const Filter = () => {
-  const dispatch = useDispatch();
   const filter = useSelector(getFiler);
+  const dispatch = useDispatch();
   const handleFilter = e => {
-    dispatch(onFilter(e.target.value));
+    dispatch(onFilter(e.currentTarget.value));
   };
   return (
     <div className="FilterWrapper">
