@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormContainer, InputForm, Button } from './ContactFormStyled';
 import { useState } from 'react';
 import { addNewContact } from 'redux/contactsSlice';
-import { nanoid } from '@reduxjs/toolkit';
 import { getContacts } from 'redux/selectors';
 import { notify } from 'components/services';
 
@@ -20,7 +19,6 @@ export const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const contact = {
-      id: nanoid(),
       name,
       number,
     };
