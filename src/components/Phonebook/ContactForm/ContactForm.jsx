@@ -2,9 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormContainer, InputForm, Button } from './ContactFormStyled';
 import { useState } from 'react';
-import { addNewContact, getContacts } from 'redux/contactsSlice';
-import { toast } from 'react-toastify';
+import { addNewContact } from 'redux/contactsSlice';
 import { nanoid } from '@reduxjs/toolkit';
+import { getContacts } from 'redux/selectors';
+import { notify } from 'components/services';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
@@ -15,18 +16,6 @@ export const ContactForm = () => {
   };
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
-  const notify = name => {
-    toast.error(`Sorry, ${name} already exists`, {
-      position: 'top-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-  };
 
   const handleSubmit = e => {
     e.preventDefault();

@@ -6,7 +6,7 @@ import { ContactList } from './Phonebook/ContactList/ContactList';
 import { Container } from './Phonebook/cotainer';
 import Filter from './Phonebook/Filter/Filer';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
 export const App = () => {
   const contacts = useSelector(getContacts);
