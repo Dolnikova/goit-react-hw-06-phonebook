@@ -24,9 +24,11 @@ export const ContactForm = () => {
       name,
       number,
     };
-    contacts.some(contact => contact.name === name)
-      ? notify(name)
-      : dispatch(addNewContact(contact));
+    if (contacts.some(contact => contact.name === name)) {
+      notify(name);
+    } else {
+      dispatch(addNewContact(contact));
+    }
     setName('');
     setNumber('');
   };
